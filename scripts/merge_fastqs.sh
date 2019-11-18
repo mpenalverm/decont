@@ -3,4 +3,4 @@
 # The directory containing the samples is indicated by the first argument.
 
 mkdir -p $2
-cat $1/$3-12.5dpp.1.1s_sRNA.fastq.gz $1/$3-12.5dpp.1.2s_sRNA.fastq.gz > $2/$3.fastq.gz
+cat $1/$3* > $2/$3.fastq.gz
