@@ -11,13 +11,18 @@
 #bash scripts/index.sh res/contaminants.fasta res/contaminants_idx
 
 # Merge the samples into a single file
-for sid in $(ls data/*.fastq.gz | cut -d"-" -f1 | sed "s:data/::" | sort | uniq )
-do
-    bash scripts/merge_fastqs.sh data out/merged $sid
-done
+#for sid in $(ls data/*.fastq.gz | cut -d"-" -f1 | sed "s:data/::" | sort | uniq )
+#do
+#    bash scripts/merge_fastqs.sh data out/merged $sid
+#done
 
 # TODO: run cutadapt for all merged files
-# cutadapt -m 18 -a TGGAATTCTCGGGTGCCAAGG --discard-untrimmed -o <trimmed_file> <input_file> > <log_file>
+mkdir -p log/cutadapt
+mkdir -p out/trimmed
+for sid in $(ls out/merged | sed "s:.fastq.gz::")
+do
+	cutadapt -m 18 -a TGGAATTCTCGGGTGCCAAGG --discard-untrimmed -o out/trimmed/$sid.trimmed.fastq.gz out/merged/$sid.fastq.gz > log/cutadapt/$sid.log
+done
 
 #TODO: run STAR for all trimmed files
 #for fname in out/trimmed/*.fastq.gz
