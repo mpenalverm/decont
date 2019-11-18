@@ -1,4 +1,6 @@
-#Download all the files specified in data/filenames for url in $(cat data/urls) do
+#Download all the files specified in data/filenames 
+#for url in $(cat data/urls)
+# do
 #	bash scripts/download.sh $url data
 #done
 
