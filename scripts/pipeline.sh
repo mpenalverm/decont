@@ -4,8 +4,8 @@ do
 	bash scripts/download.sh $url data
 done
 
-# Download the contaminants fasta file, and uncompress it
-#bash scripts/download.sh <contaminants_url> res yes #TODO
+#Download the contaminants fasta file, and uncompress it
+bash scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes
 
 # Index the contaminants file
 #bash scripts/index.sh res/contaminants.fasta res/contaminants_idx
