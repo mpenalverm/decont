@@ -36,7 +36,7 @@ for fname in out/trimmed/*.fastq.gz
 do
    # you will need to obtain the sample ID from the filename
 	sid=$(echo $(basename $fname .trimmed.fastq.gz))
-	if [ ! -e "out/star/$sid/" ]
+	if [ ! -e "out/star/$sid/Aligned.out.sam" ]
 	then
 		mkdir -p out/star/$sid/
     		STAR --runThreadN 4 --genomeDir res/contaminants_idx --outReadsUnmapped Fastx --readFilesIn $fname --readFilesCommand zcat --outFileNamePrefix out/star/$sid/
