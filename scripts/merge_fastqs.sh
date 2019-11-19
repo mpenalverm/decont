@@ -2,5 +2,8 @@
 # into a single file, which should be stored in the output directory specified by the second argument.
 # The directory containing the samples is indicated by the first argument.
 
-mkdir -p $2
-cat $1/$3* > $2/$3.fastq.gz
+if [ ! -f "$2/$3.fastq.gz" ]
+then
+	mkdir -p $2
+	cat $1/$3* > $2/$3.fastq.gz
+fi
