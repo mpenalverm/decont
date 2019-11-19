@@ -27,7 +27,7 @@ do
 	then
 		cutadapt -m 18 -a TGGAATTCTCGGGTGCCAAGG --discard-untrimmed -o out/trimmed/$sid.trimmed.fastq.gz out/merged/$sid.fastq.gz > log/cutadapt/$sid.log
 	else
-		echo "File already exists"
+		echo "File $sid.trimmed.fastq.gz already exists"
 	fi
 done
 
@@ -41,7 +41,7 @@ do
 		mkdir -p out/star/$sid/
     		STAR --runThreadN 4 --genomeDir res/contaminants_idx --outReadsUnmapped Fastx --readFilesIn $fname --readFilesCommand zcat --outFileNamePrefix out/star/$sid/
 	else
-		echo "File already exists"
+		echo "Star already run for sample $sid"
 	fi
 done 
 

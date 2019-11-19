@@ -7,5 +7,5 @@ then
 	mkdir -p $2
 	cat $1/$3* > $2/$3.fastq.gz
 else
-	echo "File already exists"
+	echo "File $2/$3.fastq.gz already exists"
 fi

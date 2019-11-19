@@ -8,5 +8,5 @@ then
 	mkdir -p $2
 	STAR --runThreadN 4 --runMode genomeGenerate --genomeDir $2 --genomeFastaFiles $1 --genomeSAindexNbases 9
 else
-	echo "File already exists"
+	echo "Index already done"
 fi
