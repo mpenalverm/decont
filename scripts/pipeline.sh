@@ -4,7 +4,7 @@
 #	bash scripts/download.sh $url data
 #done
 
-wget -P data $(cat data/urls)
+wget -P data -nc $(cat data/urls)
 
 #Download the contaminants fasta file, and uncompress it
 bash scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes
@@ -41,7 +41,7 @@ do
 		mkdir -p out/star/$sid/
     		STAR --runThreadN 4 --genomeDir res/contaminants_idx --outReadsUnmapped Fastx --readFilesIn $fname --readFilesCommand zcat --outFileNamePrefix out/star/$sid/
 	else
-		echo "Star already run for sample $sid"
+		echo "Sample $sid already analyzed by STAR"
 	fi
 done 
 
@@ -53,15 +53,20 @@ done
 touch log/pipeline.log
 for sid in $(ls out/trimmed | sed "s:.trimmed.fastq.gz::")
 do
-	echo >> log/pipeline.log
-	echo $sid >> log/pipeline.log
-        echo >> log/pipeline.log
-	echo "CUTADAPT ANALYSIS" >> log/pipeline.log
-	cat log/cutadapt/$sid.log | grep "^Reads with adapters" >> log/pipeline.log
-	cat log/cutadapt/$sid.log | grep "^Total basepairs processed" >> log/pipeline.log
-        echo >> log/pipeline.log
-	echo "STAR ANALYSIS" >> log/pipeline.log
-        cat out/star/$sid/Log.final.out | grep "Uniquely mapped reads %" >> log/pipeline.log
-        cat out/star/$sid/Log.final.out | grep "% of reads mapped to multiple loci" >> log/pipeline.log
-        cat out/star/$sid/Log.final.out | grep "% of reads mapped to too many loci" >> log/pipeline.log
+	if grep -Fq "$sid" log/pipeline.log 
+	then
+		echo "Log info for sample $sid already in pipeline.log"
+	else	
+		echo >> log/pipeline.log
+		echo $sid >> log/pipeline.log
+        	echo >> log/pipeline.log
+		echo "CUTADAPT ANALYSIS" >> log/pipeline.log
+		cat log/cutadapt/$sid.log | grep "^Reads with adapters" >> log/pipeline.log
+		cat log/cutadapt/$sid.log | grep "^Total basepairs processed" >> log/pipeline.log
+        	echo >> log/pipeline.log
+		echo "STAR ANALYSIS" >> log/pipeline.log
+        	cat out/star/$sid/Log.final.out | grep "Uniquely mapped reads %" >> log/pipeline.log
+        	cat out/star/$sid/Log.final.out | grep "% of reads mapped to multiple loci" >> log/pipeline.log
+        	cat out/star/$sid/Log.final.out | grep "% of reads mapped to too many loci" >> log/pipeline.log
+	fi
 done
