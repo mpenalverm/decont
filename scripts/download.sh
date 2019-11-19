@@ -7,4 +7,6 @@ then
 	then
 		gunzip -k $2/$(basename $1) 
 	fi
+else
+	echo "File already exists"
 fi

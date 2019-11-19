@@ -6,4 +6,6 @@ if [ ! -f "$2/$3.fastq.gz" ]
 then
 	mkdir -p $2
 	cat $1/$3* > $2/$3.fastq.gz
+else
+	echo "File already exists"
 fi
